@@ -35,7 +35,7 @@ namespace VismaNetIntegrations
             var data = await client.PostAsync(TokenEndpoint, content);
             var status = data.StatusCode;
             if (status != HttpStatusCode.OK)
-                throw new VismaNetException("Failure to create token.", data.StatusCode.ToString(),
+                throw new VismaNetException("Failure to create token.", int.Parse(data.StatusCode.ToString()),
                     await data.Content.ReadAsStringAsync(), data.Headers.ToDictionary(x => x.Key, x => x.Value), null);
             var rsp = JsonConvert.DeserializeObject<JObject>(await data.Content.ReadAsStringAsync());
             return rsp["token"].Value<string>();
@@ -64,7 +64,7 @@ namespace VismaNetIntegrations
             var data = await client.PostAsync(TokenEndpoint, content);
             var status = data.StatusCode;
             if (status != HttpStatusCode.OK)
-                throw new VismaNetException("Failure to create token from code.", data.StatusCode.ToString(),
+                throw new VismaNetException("Failure to create token from code.", int.Parse(data.StatusCode.ToString()),
                     await data.Content.ReadAsStringAsync(), data.Headers.ToDictionary(x => x.Key, x => x.Value), null);
             var rsp = JsonConvert.DeserializeObject<JObject>(await data.Content.ReadAsStringAsync());
             return rsp["token"].Value<string>();
