@@ -40,15 +40,21 @@ namespace VismaNetIntegrations.v9_11_0_1001
         {
             var httpRequestMessage = new HttpRequestMessage();
             ApplyUserAgent(httpRequestMessage);
-            ApplyVismaNetHeaders(httpRequestMessage);
+            ApplyVismaNetHeadersAsync(httpRequestMessage);
             return Task.FromResult(httpRequestMessage);
         }
 
-        private void ApplyVismaNetHeaders(HttpRequestMessage httpRequestMessage)
+        private void ApplyVismaNetHeadersAsync(HttpRequestMessage httpRequestMessage)
         {
             httpRequestMessage.Headers.Add("ipp-application-type", "Visma.net Financials");
             if (_settings != null)
             {
+                if (_settings.tokenExpires > DateTimeOffset.Now.AddMinutes(-3) && !string.IsNullOrEmpty(_settings.ClientID))
+                {
+                    var vcToken = ONIT.VismaNetApi.VismaNet.GetTokenFromVismaConnect(_settings.ClientID, _settings.ClientSecret, _settings.tenantId, scope: "vismanet_erp_service_api:read").Result;
+                    _settings.Token = vcToken.access_token;
+                    _settings.tokenExpires = vcToken.expires_on;
+                }
                 httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _settings.Token);
                 if (_settings.CompanyId > 0)
                     httpRequestMessage.Headers.Add("ipp-company-id", _settings.CompanyId.ToString());
