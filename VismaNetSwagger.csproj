@@ -8,9 +8,9 @@
     <Authors>Ole Melhus</Authors>
     <Company>ON IT AS</Company>
     <Product>Visma.net Integrations Swagger Client</Product>
-    <Version>9.11.00.1001</Version>
-    <FileVersion>9.11.00.1001</FileVersion>
-    <AssemblyVersion>9.11.00.1001</AssemblyVersion>
+    
+    
+    
     <PackageId>Visma.net.swagger</PackageId>
     <Copyright>ON IT AS</Copyright>
     <Description>This is an auto-generated Visma.net Integrations client based on the swagger.json published by Visma. The version number reflects the version of the swagger file it is generated from.</Description>

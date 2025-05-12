@@ -1,4 +1,4 @@
-﻿$swagger = invoke-webrequest https://integration.visma.net/API-index/doc/swagger
+﻿$swagger = invoke-webrequest https://finance.visma.net/swaggerui/api/vismanet.erp.service.api-apim
 
 ## Replacements for Subscription
 $swagger = $swagger -replace """getAllEvents""", """Subscription_getAllEvents"""
